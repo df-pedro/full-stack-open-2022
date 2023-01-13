@@ -1,1 +1,1 @@
-# full-stack-open-2022
+# FullStack Open 2022
