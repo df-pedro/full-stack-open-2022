@@ -24,6 +24,12 @@ const FeedbackButtons = ({ setGood, setNeutral, setBad }) => {
   )
 }
 
+const StatisticLine = ({ text, stat }) => {
+  return (
+    <p>{text} {stat}</p>
+  )
+}
+
 const Statistics = ({ good, neutral, bad }) => {
 
   const totalRatings = (good, neutral, bad) => {
@@ -47,12 +53,12 @@ const Statistics = ({ good, neutral, bad }) => {
   if (good || neutral || bad) {
     return (
       <div>
-        <p>good {good}</p>
-        <p>neutral {neutral}</p>
-        <p>bad {bad}</p>
-        <p>all {totalRatings(good, neutral, bad)}</p>
-        <p>average {averageScore(good, neutral, bad)}</p>
-        <p>positive {positiveRatio(good, neutral, bad)}</p>
+        <StatisticLine text="good" stat={good} />
+        <StatisticLine text="neutral" stat={neutral} />
+        <StatisticLine text="bad" stat={bad} />
+        <StatisticLine text="all" stat={totalRatings(good, neutral, bad)} />
+        <StatisticLine text="average" stat={averageScore(good, neutral, bad)} />
+        <StatisticLine text="positive" stat={positiveRatio(good, neutral, bad)} />
       </div>
     )
   }
