@@ -26,7 +26,10 @@ const FeedbackButtons = ({ setGood, setNeutral, setBad }) => {
 
 const StatisticLine = ({ text, stat }) => {
   return (
-    <p>{text} {stat}</p>
+    <tr>
+      <td>{text}</td>
+      <td>{stat}</td>
+    </tr>
   )
 }
 
@@ -42,24 +45,26 @@ const Statistics = ({ good, neutral, bad }) => {
     const WEIGHT_BAD = -1;
     const total = totalRatings(good, neutral, bad);
     const average = (WEIGHT_GOOD * good + WEIGHT_NEUTRAL * neutral + WEIGHT_BAD * bad) / total;
-    return average;
+    return average.toFixed(2);
   }
 
   const positiveRatio = (good, neutral, bad) => {
     const total = totalRatings(good, neutral, bad);
-    return good / total;
+    return (good / total).toFixed(2);
   }
 
   if (good || neutral || bad) {
     return (
-      <div>
-        <StatisticLine text="good" stat={good} />
-        <StatisticLine text="neutral" stat={neutral} />
-        <StatisticLine text="bad" stat={bad} />
-        <StatisticLine text="all" stat={totalRatings(good, neutral, bad)} />
-        <StatisticLine text="average" stat={averageScore(good, neutral, bad)} />
-        <StatisticLine text="positive" stat={positiveRatio(good, neutral, bad)} />
-      </div>
+      <table>
+        <tbody>
+          <StatisticLine text="good" stat={good} />
+          <StatisticLine text="neutral" stat={neutral} />
+          <StatisticLine text="bad" stat={bad} />
+          <StatisticLine text="all" stat={totalRatings(good, neutral, bad)} />
+          <StatisticLine text="average" stat={averageScore(good, neutral, bad)} />
+          <StatisticLine text="positive" stat={positiveRatio(good, neutral, bad)} />
+        </tbody>
+      </table>
     )
   }
 
