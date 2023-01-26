@@ -1,5 +1,14 @@
 import { useState } from 'react'
 
+const Anecdote = ({ anecdote, points }) => {
+  return (
+    <div>
+      {anecdote}
+      <p>has {points} vote{points !== 1 && `s`}</p>
+    </div>
+  )
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -14,6 +23,7 @@ const App = () => {
 
   const [selected, setSelected] = useState(0)
   const [points, setPoints] = useState(new Array(anecdotes.length).fill(0))
+  const [max, setMax] = useState(0);
 
   const handleSelected = () => {
     const randomAnecdote = Math.floor(Math.random() * anecdotes.length);
@@ -24,22 +34,31 @@ const App = () => {
     return () => {
       const newState = [...points];
       newState[index] += 1;
+      if (newState[index] > max) {
+        setMax(max + 1)
+      }
       setPoints(newState);
     }
   }
 
   return (
     <div>
-      <div>
-        {anecdotes[selected]}
-        <p>has {points[selected]} vote{points[selected] !== 1 && `s`}</p>
-      </div>
+      <h1>anecdote of the day</h1>
+      <Anecdote
+        anecdote={anecdotes[selected]}
+        points={points[selected]}
+      />
       <button onClick={handleVote(selected)}>
         vote
       </button>
       <button onClick={handleSelected}>
         next anecdote
       </button>
+      <h1>anecdote with most votes</h1>
+      <Anecdote
+        anecdote={anecdotes[points.indexOf(max)]}
+        points={points[points.indexOf(max)]}
+      />
     </div>
   )
 }
